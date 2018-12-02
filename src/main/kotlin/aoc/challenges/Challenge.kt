@@ -1,4 +1,4 @@
-package aoc
+package aoc.challenges
 
 /**
  * @author Harrison | Hc747
@@ -6,5 +6,10 @@ package aoc
  * @version 1.0
  * @since 2018-12-03
  */
-object Main {
+interface Challenge<F, S> {
+
+    fun first(): F
+
+    fun second(): S
+
 }
