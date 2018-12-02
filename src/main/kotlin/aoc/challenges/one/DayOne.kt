@@ -11,7 +11,7 @@ import aoc.challenges.Challenge
  */
 class TemporalDevice(var frequency: Int = 0) {
 
-    fun calibrate(offsets: IntArray) {
+    fun calibrate(vararg offsets: Int) {
         frequency += offsets.fold(0) { curr, next -> curr + next }
     }
 
@@ -24,13 +24,28 @@ open class DayOne : Challenge<Int, Int> {
 
         val device = TemporalDevice()
 
-        device.calibrate(input.toIntArray())
+        device.calibrate(*input.toIntArray())
 
         return device.frequency
     }
 
     override fun second(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val input = AdventUtils.readLines(1).map { Integer.parseInt(it) }
+
+        val device = TemporalDevice()
+        val visited = HashSet<Int>()
+
+        while (true) {
+            for (element in input) {
+                visited += device.frequency
+
+                device.calibrate(element)
+
+                if (device.frequency in visited) {
+                    return device.frequency
+                }
+            }
+        }
     }
 
 }

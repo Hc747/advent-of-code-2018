@@ -19,15 +19,17 @@ object Main {
 
             println("Day: ${it::class.simpleName}")
 
-            println("-".repeat(15))
+            println("-".repeat(30))
 
             println("First Challenge: ${try {it.first()} catch (e: Throwable) { e }}")
 
-            println("-".repeat(15))
+            println("-".repeat(30))
 
             println("Second Challenge: ${try { it.second() } catch (e: Throwable) { e }}")
 
-            println("-".repeat(15))
+            println("-".repeat(30))
+
+            println()
         }
     }
 
