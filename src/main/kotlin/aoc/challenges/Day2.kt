@@ -34,7 +34,7 @@ class Box(private val identifier: String) {
 
 }
 
-open class DayTwo : DailyChallenge<Int, String> {
+open class Day2 : DailyChallenge<Int, String> {
 
     override fun first(): Int {
         val input = AdventUtils.readLines(2).map { Box(it) }

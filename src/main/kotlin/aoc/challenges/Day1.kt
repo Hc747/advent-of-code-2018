@@ -16,7 +16,7 @@ class TemporalDevice(var frequency: Int = 0) {
 
 }
 
-open class DayOne : DailyChallenge<Int, Int> {
+open class Day1 : DailyChallenge<Int, Int> {
 
     override fun first(): Int {
         val input = AdventUtils.readLines(1).map { Integer.parseInt(it) }
