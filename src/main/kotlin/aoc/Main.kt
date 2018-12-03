@@ -1,6 +1,6 @@
 package aoc
 
-import aoc.challenges.Challenge
+import aoc.challenges.DailyChallenge
 import java.util.*
 
 /**
@@ -13,7 +13,7 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val challenges = ServiceLoader.load(Challenge::class.java)
+        val challenges = ServiceLoader.load(DailyChallenge::class.java)
 
         challenges.forEach {
 

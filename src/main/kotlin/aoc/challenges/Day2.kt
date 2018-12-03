@@ -1,7 +1,6 @@
-package aoc.challenges.two
+package aoc.challenges
 
 import aoc.AdventUtils
-import aoc.challenges.Challenge
 
 /**
  * @author Harrison | Hc747
@@ -35,7 +34,7 @@ class Box(private val identifier: String) {
 
 }
 
-open class DayTwo : Challenge<Int, String> {
+open class DayTwo : DailyChallenge<Int, String> {
 
     override fun first(): Int {
         val input = AdventUtils.readLines(2).map { Box(it) }
@@ -44,14 +43,16 @@ open class DayTwo : Challenge<Int, String> {
     }
 
     override fun second(): String {
-        val input = AdventUtils.readLines(2).map { Box(it) }
+        val input = AdventUtils.readLines(2).map { Box(it) }.toMutableList()
 
-        for (outer in input) {
+        val iterator = input.iterator()
+
+        while (iterator.hasNext()) {
+            val outer = iterator.next()
+
+            iterator.remove()
+
             for (inner in input) {
-                if (outer == inner) {
-                    continue
-                }
-
                 val difference = outer.differentiate(inner)
 
                 if (difference.first == 1) {

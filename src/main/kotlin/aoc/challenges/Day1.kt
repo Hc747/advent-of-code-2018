@@ -1,7 +1,6 @@
-package aoc.challenges.one
+package aoc.challenges
 
 import aoc.AdventUtils
-import aoc.challenges.Challenge
 
 /**
  * @author Harrison | Hc747
@@ -17,7 +16,7 @@ class TemporalDevice(var frequency: Int = 0) {
 
 }
 
-open class DayOne : Challenge<Int, Int> {
+open class DayOne : DailyChallenge<Int, Int> {
 
     override fun first(): Int {
         val input = AdventUtils.readLines(1).map { Integer.parseInt(it) }

@@ -6,7 +6,7 @@ package aoc.challenges
  * @version 1.0
  * @since 2018-12-03
  */
-interface Challenge<F, S> {
+interface DailyChallenge<F, S> {
 
     fun first(): F
 
