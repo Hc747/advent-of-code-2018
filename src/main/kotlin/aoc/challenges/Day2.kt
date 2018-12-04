@@ -53,10 +53,10 @@ open class Day2 : DailyChallenge<List<Box>, Int, String> {
             iterator.remove()
 
             for (inner in boxes) {
-                val difference = outer.differentiate(inner)
+                val (differences, sequence) = outer.differentiate(inner)
 
-                if (difference.first == 1) {
-                    return difference.second
+                if (differences == 1) {
+                    return sequence
                 }
             }
         }

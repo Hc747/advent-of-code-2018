@@ -33,10 +33,10 @@ open class Day1 : DailyChallenge<List<Int>, Int, Int> {
         val visited = HashSet<Int>()
 
         while (true) {
-            for (element in input) {
+            for (frequency in input) {
                 visited += device.frequency
 
-                device.calibrate(element)
+                device.calibrate(frequency)
 
                 if (device.frequency in visited) {
                     return device.frequency
