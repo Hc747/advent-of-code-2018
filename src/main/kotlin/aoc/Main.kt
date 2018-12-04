@@ -4,6 +4,7 @@ import aoc.challenges.DailyChallenge
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 /**
  * @author Harrison | Hc747
@@ -17,19 +18,39 @@ object Main {
     fun main(args: Array<String>) = runBlocking {
         val challenges = ServiceLoader.load(DailyChallenge::class.java)
 
+        fun execute(block: () -> Any?) = async {
+            var result: Any? = null
+            val duration = measureTimeMillis {
+                result = try {
+                    block()
+                } catch (e: Throwable) {
+                    e
+                }
+            }
+            result to duration
+        }
+
         challenges.forEach {
-            val first = async { try {it.first()} catch (e: Throwable) { e } }
-            val second = async { try {it.second()} catch (e: Throwable) { e } }
+            val first = execute(it::first)
+            val second = execute(it::second)
 
             println("Day: ${it::class.simpleName}")
 
             println("-".repeat(30))
 
-            println("First Challenge: ${first.await()}")
+            var result = first.await()
+
+            println("First Challenge")
+            println("Result: ${result.first}")
+            println("Execution Time: ${result.second} milliseconds")
 
             println("-".repeat(30))
 
-            println("Second Challenge: ${second.await()}")
+            result = second.await()
+
+            println("Second Challenge")
+            println("Result: ${result.first}")
+            println("Execution Time: ${result.second} milliseconds")
 
             println("-".repeat(30))
 
