@@ -1,6 +1,8 @@
 package aoc
 
 import aoc.challenges.DailyChallenge
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 /**
@@ -12,20 +14,22 @@ import java.util.*
 object Main {
 
     @JvmStatic
-    fun main(args: Array<String>) {
+    fun main(args: Array<String>) = runBlocking {
         val challenges = ServiceLoader.load(DailyChallenge::class.java)
 
         challenges.forEach {
+            val first = async { try {it.first()} catch (e: Throwable) { e } }
+            val second = async { try {it.second()} catch (e: Throwable) { e } }
 
             println("Day: ${it::class.simpleName}")
 
             println("-".repeat(30))
 
-            println("First Challenge: ${try {it.first()} catch (e: Throwable) { e }}")
+            println("First Challenge: ${first.await()}")
 
             println("-".repeat(30))
 
-            println("Second Challenge: ${try { it.second() } catch (e: Throwable) { e }}")
+            println("Second Challenge: ${second.await()}")
 
             println("-".repeat(30))
 
