@@ -56,7 +56,7 @@ open class Day4 : DailyChallenge<List<Guard>, Int, Int> {
             val timestamp = LocalDateTime.parse(groups[1]!!.value, TIME_FORMAT)
             val event = groups[2]!!.value
 
-            val info = when (event) {
+            val payload = when (event) {
                 "wakes up" -> null to GuardState.AWAKE
                 "falls asleep" -> null to GuardState.ASLEEP
                 else -> {
@@ -66,7 +66,9 @@ open class Day4 : DailyChallenge<List<Guard>, Int, Int> {
                 }
             }
 
-            return GuardEvent(timestamp, info.first, info.second)
+            val (guard, state) = payload
+
+            return GuardEvent(timestamp, guard, state)
         }
 
     }
