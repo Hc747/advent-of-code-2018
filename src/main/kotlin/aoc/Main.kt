@@ -36,7 +36,7 @@ object Main {
 
             println("Day: ${it::class.simpleName}")
 
-            println("-".repeat(30))
+            println("-".repeat(45))
 
             var result = first.await()
 
@@ -44,7 +44,7 @@ object Main {
             println("Result: ${result.first}")
             println("Execution Time: ${result.second} milliseconds")
 
-            println("-".repeat(30))
+            println("-".repeat(45))
 
             result = second.await()
 
@@ -52,7 +52,7 @@ object Main {
             println("Result: ${result.first}")
             println("Execution Time: ${result.second} milliseconds")
 
-            println("-".repeat(30))
+            println("-".repeat(45))
 
             println()
         }
