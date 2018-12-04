@@ -41,24 +41,22 @@ open class Day3 : DailyChallenge<Int, Int> {
 
     companion object {
 
-        fun parse(line: String): Claim {
-            with(line) {
-                val input = toLowerCase().split("@", ":", limit = 3).map { it.trim() }
+        private fun String.parse(): Claim {
+            val input = toLowerCase().split("@", ":", limit = 3).map { it.trim() }
 
-                val id = input[0].replace("#", "").toInt()
+            val id = input[0].replace("#", "").toInt()
 
-                var data = input[1].split(",")
+            var data = input[1].split(",")
 
-                val left = data[0].toInt()
-                val top = data[1].toInt()
+            val left = data[0].toInt()
+            val top = data[1].toInt()
 
-                data = input[2].split("x")
+            data = input[2].split("x")
 
-                val width = data[0].toInt()
-                val height = data[1].toInt()
+            val width = data[0].toInt()
+            val height = data[1].toInt()
 
-                return Claim(id, left, top, width, height)
-            }
+            return Claim(id, left, top, width, height)
         }
 
     }
@@ -66,11 +64,7 @@ open class Day3 : DailyChallenge<Int, Int> {
     override fun first(): Int {
         val context = ClaimsContext()
 
-        AdventUtils.readLines(3).forEach {
-            val claim = parse(it)
-
-            context.addClaim(claim)
-        }
+        AdventUtils.readLines(3).forEach { context.addClaim(it.parse()) }
 
         return context.references.entries.count { it.value >= 2 }
     }
@@ -78,7 +72,7 @@ open class Day3 : DailyChallenge<Int, Int> {
     override fun second(): Int {
         val context = ClaimsContext()
         val input = AdventUtils.readLines(3).map {
-            val claim = parse(it)
+            val claim = it.parse()
 
             context.addClaim(claim)
 
