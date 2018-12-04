@@ -34,25 +34,25 @@ class Box(private val identifier: String) {
 
 }
 
-open class Day2 : DailyChallenge<Int, String> {
+open class Day2 : DailyChallenge<List<Box>, Int, String> {
+
+    override val input: List<Box> = AdventUtils.readLines(2).map { Box(it) }
 
     override fun first(): Int {
-        val input = AdventUtils.readLines(2).map { Box(it) }
-
         return input.count { it.hasRecurringValue(2) } * input.count { it.hasRecurringValue(3) }
     }
 
     override fun second(): String {
-        val input = AdventUtils.readLines(2).map { Box(it) }.toMutableList()
+        val boxes = input.toMutableList()
 
-        val iterator = input.iterator()
+        val iterator = boxes.iterator()
 
         while (iterator.hasNext()) {
             val outer = iterator.next()
 
             iterator.remove()
 
-            for (inner in input) {
+            for (inner in boxes) {
                 val difference = outer.differentiate(inner)
 
                 if (difference.first == 1) {

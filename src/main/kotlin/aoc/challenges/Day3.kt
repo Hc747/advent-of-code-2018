@@ -37,7 +37,7 @@ class Claim(val id: Int, left: Int, top: Int, width: Int, height: Int) {
 
 }
 
-open class Day3 : DailyChallenge<Int, Int> {
+open class Day3 : DailyChallenge<Pair<ClaimsContext, List<Claim>>, Int, Int> {
 
     companion object {
 
@@ -61,25 +61,27 @@ open class Day3 : DailyChallenge<Int, Int> {
 
     }
 
-    override fun first(): Int {
+    override val input: Pair<ClaimsContext, List<Claim>> = let {
         val context = ClaimsContext()
-
-        AdventUtils.readLines(3).forEach { context.addClaim(it.parse()) }
-
-        return context.references.entries.count { it.value >= 2 }
-    }
-
-    override fun second(): Int {
-        val context = ClaimsContext()
-        val input = AdventUtils.readLines(3).map {
-            val claim = it.parse()
+        val claims = AdventUtils.readLines(3).map { line ->
+            val claim = line.parse()
 
             context.addClaim(claim)
 
             claim
         }
 
-        return input.find { claim -> claim.coordinates.all { coordinate -> context.references[coordinate] == 1 } }?.id
+        context to claims
+    }
+
+    override fun first(): Int {
+        val (context) = input
+        return context.references.entries.count { it.value >= 2 }
+    }
+
+    override fun second(): Int {
+        val (context, claims) = input
+        return claims.find { claim -> claim.coordinates.all { coordinate -> context.references[coordinate] == 1 } }?.id
             ?: throw IllegalStateException("Unable to solve puzzle for given input.")
     }
 

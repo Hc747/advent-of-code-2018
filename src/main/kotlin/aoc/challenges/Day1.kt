@@ -16,11 +16,11 @@ class TemporalDevice(var frequency: Int = 0) {
 
 }
 
-open class Day1 : DailyChallenge<Int, Int> {
+open class Day1 : DailyChallenge<List<Int>, Int, Int> {
+
+    override val input: List<Int> = AdventUtils.readLines(1).map { Integer.parseInt(it) }
 
     override fun first(): Int {
-        val input = AdventUtils.readLines(1).map { Integer.parseInt(it) }
-
         val device = TemporalDevice()
 
         device.calibrate(*input.toIntArray())
@@ -29,8 +29,6 @@ open class Day1 : DailyChallenge<Int, Int> {
     }
 
     override fun second(): Int {
-        val input = AdventUtils.readLines(1).map { Integer.parseInt(it) }
-
         val device = TemporalDevice()
         val visited = HashSet<Int>()
 

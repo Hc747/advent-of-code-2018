@@ -42,7 +42,7 @@ data class Guard(val id: Int) {
 
 data class GuardEvent(val timestamp: LocalDateTime, val guard: Guard?, val state: GuardState?)
 
-open class Day4 : DailyChallenge<Int, Int> {
+open class Day4 : DailyChallenge<List<Guard>, Int, Int> {
 
     companion object {
 
@@ -71,14 +71,14 @@ open class Day4 : DailyChallenge<Int, Int> {
 
     }
 
-    override fun first(): Int {
-        val input = AdventUtils.readLines(4).map { it.parse() }.sortedWith(Comparator { a, b -> a.timestamp.compareTo(b.timestamp) })
+    override val input: List<Guard> = let {
+        val events = AdventUtils.readLines(4).map { it.parse() }.sortedWith(Comparator { a, b -> a.timestamp.compareTo(b.timestamp) })
 
         val guards = mutableMapOf<Int, Guard>()
 
         var guard: Guard? = null
 
-        for (event in input) {
+        for (event in events) {
 
             if (event.guard != null) {
                 guard = guards.computeIfAbsent(event.guard.id) { event.guard }
@@ -89,31 +89,16 @@ open class Day4 : DailyChallenge<Int, Int> {
 
         }
 
-        guard = guards.values.sortedByDescending { it.sleep.sum() }.first()
+        guards.values.toList()
+    }
 
+    override fun first(): Int {
+        val guard = input.sortedByDescending { it.sleep.sum() }.first()
         return guard.id * guard.sleepiestMinute
     }
 
     override fun second(): Int {
-        val input = AdventUtils.readLines(4).map { it.parse() }.sortedWith(Comparator { a, b -> a.timestamp.compareTo(b.timestamp) })
-
-        val guards = mutableMapOf<Int, Guard>()
-
-        var guard: Guard? = null
-
-        for (event in input) {
-
-            if (event.guard != null) {
-                guard = guards.computeIfAbsent(event.guard.id) { event.guard }
-                guard.transitionState(GuardState.AWAKE, event.timestamp, update = false)
-            } else {
-                guard!!.transitionState(event.state!!, event.timestamp)
-            }
-
-        }
-
-        guard = guards.values.sortedByDescending { it.sleep[it.sleepiestMinute] }.first()
-
+        val guard = input.sortedByDescending { it.sleep[it.sleepiestMinute] }.first()
         return guard.id * guard.sleepiestMinute
     }
 

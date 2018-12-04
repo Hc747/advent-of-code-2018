@@ -6,7 +6,9 @@ package aoc.challenges
  * @version 1.0
  * @since 2018-12-03
  */
-interface DailyChallenge<F, S> {
+interface DailyChallenge<I, F, S> {
+
+    val input: I
 
     fun first(): F
 
