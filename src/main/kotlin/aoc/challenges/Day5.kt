@@ -28,7 +28,7 @@ private fun String.react(): String {
     return builder.toString()
 }
 
-class Day5 : DailyChallenge<String, Int, Int> {
+open class Day5 : DailyChallenge<String, Int, Int> {
 
     override val input = AdventUtils.readText(5).trim()
 
