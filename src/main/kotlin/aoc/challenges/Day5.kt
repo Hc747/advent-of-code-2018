@@ -9,7 +9,7 @@ import kotlin.math.max
  * @version 1.0
  * @since 2018-12-05
  */
-fun String.react(): String {
+private fun String.react(): String {
     val builder = StringBuilder(this)
     var index = 0
 
