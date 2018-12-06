@@ -1,6 +1,8 @@
 package aoc
 
 import aoc.challenges.DailyChallenge
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -15,10 +17,10 @@ import kotlin.system.measureTimeMillis
 object Main {
 
     @JvmStatic
-    fun main(args: Array<String>) = runBlocking {
+    fun main(args: Array<String>) {
         val challenges = ServiceLoader.load(DailyChallenge::class.java)
 
-        fun execute(block: () -> Any?) = async {
+        fun execute(block: () -> Any?) = GlobalScope.async {
             var result: Any? = null
             val duration = measureTimeMillis {
                 result = try {
@@ -26,9 +28,20 @@ object Main {
                 } catch (e: Throwable) {
                     e
                 }
-//                result = block()
             }
             result to duration
+        }
+
+        fun print(challenge: String, future: Deferred<Pair<Any?, Long>>) {
+            runBlocking {
+                val (result, duration) = future.await()
+
+                println("$challenge Challenge")
+                println("Result: $result")
+                println("Execution Time: $duration milliseconds")
+
+                println("-".repeat(45))
+            }
         }
 
         challenges.forEach {
@@ -39,21 +52,9 @@ object Main {
 
             println("-".repeat(45))
 
-            var result = first.await()
+            print("First", first)
 
-            println("First Challenge")
-            println("Result: ${result.first}")
-            println("Execution Time: ${result.second} milliseconds")
-
-            println("-".repeat(45))
-
-            result = second.await()
-
-            println("Second Challenge")
-            println("Result: ${result.first}")
-            println("Execution Time: ${result.second} milliseconds")
-
-            println("-".repeat(45))
+            print("Second", second)
 
             println()
         }
