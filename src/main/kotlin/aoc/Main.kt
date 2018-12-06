@@ -26,6 +26,7 @@ object Main {
                 } catch (e: Throwable) {
                     e
                 }
+//                result = block()
             }
             result to duration
         }
